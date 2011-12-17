@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 public class testActivity extends Activity {
 	private Game game;
@@ -14,9 +13,7 @@ public class testActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.v("msg:","111");
 		game = new Game(this);
-		Log.v("msg:","222");
 		setContentView(game);
 
 		Thread myThread = new Thread(new UpdateThread());

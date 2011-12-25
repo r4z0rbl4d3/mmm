@@ -1,44 +1,39 @@
 package thread;
 
 import android.app.Activity;
-
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class testActivity extends Activity {
-	private Game game;
-
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		game = new Game(this);
-		setContentView(game);
-
-		Thread myThread = new Thread(new UpdateThread());
-		myThread.start();
-
-	}
-
-	public class UpdateThread implements Runnable {
-
-		@Override
-		public void run() {
-			while(true){
-				testActivity.this.updateHandler.sendEmptyMessage(0);
-			}
-		}
-	}
+    /** Called when the activity is first created. */
 	
-	public Handler updateHandler = new Handler(){
-    	/** Gets called on every message that is received */
-        // @Override
-        public void handleMessage(Message msg) {
-        	game.update();
-            game.invalidate();
-            super.handleMessage(msg);
-        }
-    };
+	private static final String TAG = testActivity.class.getSimpleName();
+	
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // requesting to turn the title OFF
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // making it full screen
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // set our MainGamePanel as the View
+        setContentView(new MainGamePanel(this));
+        Log.d(TAG, "View added");
+    }
 
+	@Override
+	protected void onDestroy() {
+		Log.d(TAG, "Destroying...");
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onStop() {
+		Log.d(TAG, "Stopping...");
+		super.onStop();
+	}
+    
+    
 }

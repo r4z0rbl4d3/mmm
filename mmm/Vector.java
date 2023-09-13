@@ -43,7 +43,4 @@ public class Vector {
 	        double abs = this.absolute();
 	        return new Vector(x/abs, y/abs);
 	    }
-
-	    //TODO polymorphy check
-
 	} 
